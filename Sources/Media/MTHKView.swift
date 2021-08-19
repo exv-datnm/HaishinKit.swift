@@ -113,13 +113,14 @@ extension MTHKView: MTKViewDelegate {
             break
         }
         let bounds = CGRect(origin: .zero, size: drawableSize)
+        if isMirrored { translationY -= 160 }
         var scaledImage: CIImage = displayImage
             .transformed(by: CGAffineTransform(translationX: translationX, y: translationY))
             .transformed(by: CGAffineTransform(scaleX: scaleX, y: scaleY))
 
         if isMirrored {
             if #available(iOS 11.0, tvOS 11.0, macOS 10.13, *) {
-                scaledImage = scaledImage.oriented(.upMirrored)
+                scaledImage = scaledImage.oriented(.downMirrored)
             } else {
                 scaledImage = scaledImage.oriented(forExifOrientation: 2)
             }
